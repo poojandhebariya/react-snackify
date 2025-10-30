@@ -1,6 +1,6 @@
 {
   "name": "react-snackify",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A lightweight, customizable React Snackbar component with Tailwind CSS support.",
   "license": "MIT",
   "main": "dist/index.js",
