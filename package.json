@@ -1,0 +1,60 @@
+{
+  "name": "react-snackify",
+  "version": "1.0.0",
+  "description": "A lightweight, customizable React Snackbar component with Tailwind CSS support.",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/poojandhebariya/react-snackify"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts && npm run build:css",
+    "build:css": "npx tailwindcss -c tailwind.config.cjs -i ./src/styles/snack-bar.css -o ./dist/styles/snack-bar.css --minify",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "react",
+    "snackbar",
+    "toast",
+    "notification",
+    "tailwindcss",
+    "ui"
+  ],
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.13",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "autoprefixer": "^10.4.21",
+    "cpx": "^1.5.0",
+    "postcss": "^8.5.6",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "rollup": "^4.50.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "tailwindcss": "^4.1.13",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./styles/snack-bar.css": "./dist/styles/snack-bar.css"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1"
+  },
+  "sideEffects": [
+    "*.css"
+  ]
+}
