@@ -35,7 +35,7 @@ import 'react-snackify/styles/snack-bar.css';
 - **Progress Bar**: Visual timer that pauses on hover.
 - **Update & Close**: Programmatically update or close specific snackbars.
 - **Priority System**: Handle overlapping notifications with priority levels.
-- **Accessible**: ARIA labels, keyboard support (Escape to close), and polite live regions.
+- **Accessible**: keyboard support (Escape to close), and polite live regions.
 - **Async Support**: Show loading states and update based on promises.
 - **No Dependencies**: Lightweight and works with React 16+.
 
