@@ -3,13 +3,28 @@
   "version": "1.0.3",
   "description": "A lightweight, customizable React Snackbar component with Tailwind CSS support.",
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "author": "Poojan Dhebariya <https://github.com/poojandhebariya>",
+  "homepage": "https://github.com/poojandhebariya/react-snackify#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/poojandhebariya/react-snackify"
   },
+  "bugs": {
+    "url": "https://github.com/poojandhebariya/react-snackify/issues"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./styles/snack-bar.css": "./dist/styles/snack-bar.css"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts && npm run build:css",
     "build:css": "npx tailwindcss -c tailwind.config.cjs -i ./src/styles/snack-bar.css -o ./dist/styles/snack-bar.css --minify",
@@ -21,8 +36,14 @@
     "snackbar",
     "toast",
     "notification",
+    "react-snackbar",
+    "react-toast",
     "tailwindcss",
-    "ui"
+    "react-ui",
+    "toast-notification",
+    "alert",
+    "ui",
+    "accessible"
   ],
   "peerDependencies": {
     "react": ">=17",
@@ -44,17 +65,7 @@
     "tsup": "^8.5.0",
     "typescript": "^5.9.2"
   },
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    },
-    "./styles/snack-bar.css": "./dist/styles/snack-bar.css"
-  },
   "dependencies": {
     "clsx": "^2.1.1"
-  },
-  "sideEffects": [
-    "*.css"
-  ]
+  }
 }
