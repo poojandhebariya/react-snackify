@@ -178,23 +178,25 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
       {children}
       {portalEl &&
         createPortal(
-          snackbars.map((snackbar, index) => (
-            <Snackbar
-              key={`${snackbar.id}-${snackbar.variant}-${snackbar.message}-${snackbar.duration}`}
-              id={snackbar.id}
-              classname={snackbar.classname}
-              message={snackbar.message}
-              variant={snackbar.variant}
-              position={snackbar.position}
-              action={snackbar.action}
-              onClose={() => hideSnackbar(snackbar.id)}
-              animationType={animationType}
-              styleVariant={styleVariant}
-              icon={iconSet?.[snackbar.variant] ?? iconSet?.default}
-              duration={snackbar.duration}
-              index={index}
-            />
-          )),
+          <div className="snackbar-lib">
+            {snackbars.map((snackbar, index) => (
+              <Snackbar
+                key={`${snackbar.id}-${snackbar.variant}-${snackbar.message}-${snackbar.duration}`}
+                id={snackbar.id}
+                classname={snackbar.classname}
+                message={snackbar.message}
+                variant={snackbar.variant}
+                position={snackbar.position}
+                action={snackbar.action}
+                onClose={() => hideSnackbar(snackbar.id)}
+                animationType={animationType}
+                styleVariant={styleVariant}
+                icon={iconSet?.[snackbar.variant] ?? iconSet?.default}
+                duration={snackbar.duration}
+                index={index}
+              />
+            ))}
+          </div>,
           portalEl
         )}
     </SnackbarContext.Provider>

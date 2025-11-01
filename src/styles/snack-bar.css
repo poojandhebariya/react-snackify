@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+.snackbar-lib {
+  position: relative;
+  z-index: 9999;
+}
+
 @keyframes slideInTop {
   from {
     transform: translateY(-20px);
@@ -22,11 +27,11 @@
   }
 }
 
-.animate-slide-in-top {
+.snackbar-lib .animate-slide-in-top {
   animation: slideInTop 0.3s ease-in forwards;
 }
 
-.animate-slide-in-bottom {
+.snackbar-lib .animate-slide-in-bottom {
   animation: slideInBottom 0.3s ease-in forwards;
 }
 
@@ -125,33 +130,33 @@
 }
 
 /* Animation classes */
-.snackbar.fade-enter {
+.snackbar-lib .snackbar.fade-enter {
   animation: fadeIn 0.3s ease-in-out forwards;
 }
-.snackbar.fade-exit {
+.snackbar-lib .snackbar.fade-exit {
   animation: fadeOut 0.3s ease-in-out forwards;
 }
-.snackbar.slide-enter {
+.snackbar-lib .snackbar.slide-enter {
   animation: slideIn 0.3s ease-in-out forwards;
 }
-.snackbar.slide-exit {
+.snackbar-lib .snackbar.slide-exit {
   animation: slideOut 0.3s ease-in-out forwards;
 }
-.snackbar.scale-enter {
+.snackbar-lib .snackbar.scale-enter {
   animation: scaleIn 0.3s ease-in-out forwards;
 }
-.snackbar.scale-exit {
+.snackbar-lib .snackbar.scale-exit {
   animation: scaleOut 0.3s ease-in-out forwards;
 }
-.snackbar.grow-enter {
+.snackbar-lib .snackbar.grow-enter {
   animation: growIn 0.3s ease-in-out forwards;
 }
-.snackbar.grow-exit {
+.snackbar-lib .snackbar.grow-exit {
   animation: growOut 0.3s ease-in-out forwards;
 }
 
 /* Progress Bar Base Styles */
-.snackbar__progress-bar {
+.snackbar-lib .snackbar__progress-bar {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -171,15 +176,15 @@
 }
 
 /* Style Variants */
-.snackbar--default {
+.snackbar-lib .snackbar--default {
   /* Inherits existing styling via snackBarColors[variant] */
 }
-.snackbar__progress-bar--default {
+.snackbar-lib .snackbar__progress-bar--default {
   background: rgba(255, 255, 255, 0.5);
 }
 
 /* Neon Glow Variant */
-.snackbar--neon-glow {
+.snackbar-lib .snackbar--neon-glow {
   position: relative;
   background: #1a1a1a;
   color: #fff;
@@ -190,7 +195,7 @@
 }
 
 /* Animated glowing border only */
-.snackbar--neon-glow::before {
+.snackbar-lib .snackbar--neon-glow::before {
   content: "";
   position: absolute;
   top: 0;
@@ -217,12 +222,12 @@
   }
 }
 
-.snackbar__progress-bar--neon-glow {
+.snackbar-lib .snackbar__progress-bar--neon-glow {
   background: linear-gradient(to right, #0ff, #ff0);
 }
 
 /* Holographic Variant */
-.snackbar--holographic {
+.snackbar-lib .snackbar--holographic {
   background: linear-gradient(
     45deg,
     rgba(0, 255, 255, 0.2),
@@ -258,7 +263,7 @@
   }
 }
 
-.snackbar__progress-bar--holographic {
+.snackbar-lib .snackbar__progress-bar--holographic {
   background: linear-gradient(
     to right,
     rgba(0, 255, 255, 0.5),
@@ -267,7 +272,7 @@
 }
 
 /* Bold Monochrome Variant */
-.snackbar--bold-monochrome {
+.snackbar-lib .snackbar--bold-monochrome {
   background: #000;
   color: #fff;
   border: 1px solid #fff;
@@ -275,12 +280,12 @@
   font-weight: bold;
 }
 
-.snackbar__progress-bar--bold-monochrome {
+.snackbar-lib .snackbar__progress-bar--bold-monochrome {
   background: #fff;
 }
 
 /* Vintage Paper Variant */
-.snackbar--vintage-paper {
+.snackbar-lib .snackbar--vintage-paper {
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f5f5d5"/><path d="M0 0h100v100H0z" fill="none" stroke="%23ccc" stroke-width="1"/><g opacity="0.1"><circle cx="20" cy="20" r="5" fill="%23808080"/><circle cx="80" cy="80" r="3" fill="%23808080"/><path d="M10 90h80" stroke="%23808080" stroke-width="0.5"/></g></svg>')
     repeat;
   color: #333;
@@ -299,12 +304,12 @@
   }
 }
 
-.snackbar__progress-bar--vintage-paper {
+.snackbar-lib .snackbar__progress-bar--vintage-paper {
   background: #666;
 }
 
 /* Glassmorphism Variant */
-.snackbar--glassmorphism {
+.snackbar-lib .snackbar--glassmorphism {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -314,22 +319,22 @@
 }
 
 /* Variant Modifiers */
-.snackbar--glassmorphism.success {
+.snackbar-lib .snackbar--glassmorphism.success {
   border-color: rgba(0, 255, 128, 0.6);
   color: rgba(0, 255, 128, 0.9);
 }
 
-.snackbar--glassmorphism.error {
+.snackbar-lib .snackbar--glassmorphism.error {
   border-color: rgba(255, 0, 0, 0.6);
   color: rgba(255, 0, 0, 0.9);
 }
 
-.snackbar--glassmorphism.info {
+.snackbar-lib .snackbar--glassmorphism.info {
   border-color: rgba(0, 180, 255, 0.6);
   color: rgba(0, 180, 255, 0.9);
 }
 
-.snackbar--glassmorphism.warning {
+.snackbar-lib .snackbar--glassmorphism.warning {
   border-color: rgba(255, 200, 0, 0.6);
   color: rgba(255, 200, 0, 0.9);
 }
@@ -343,22 +348,30 @@
   }
 }
 
-.snackbar__progress-bar--glassmorphism {
+.snackbar-lib .snackbar__progress-bar--glassmorphism {
   background: rgba(255, 255, 255, 0.5);
 }
 
-.snackbar--glassmorphism.success .snackbar__progress-bar--glassmorphism {
+.snackbar-lib
+  .snackbar--glassmorphism.success
+  .snackbar__progress-bar--glassmorphism {
   background: rgba(0, 255, 128, 0.6);
 }
 
-.snackbar--glassmorphism.error .snackbar__progress-bar--glassmorphism {
+.snackbar-lib
+  .snackbar--glassmorphism.error
+  .snackbar__progress-bar--glassmorphism {
   background: rgba(255, 0, 0, 0.6);
 }
 
-.snackbar--glassmorphism.info .snackbar__progress-bar--glassmorphism {
+.snackbar-lib
+  .snackbar--glassmorphism.info
+  .snackbar__progress-bar--glassmorphism {
   background: rgba(0, 180, 255, 0.6);
 }
 
-.snackbar--glassmorphism.warning .snackbar__progress-bar--glassmorphism {
+.snackbar-lib
+  .snackbar--glassmorphism.warning
+  .snackbar__progress-bar--glassmorphism {
   background: rgba(255, 200, 0, 0.6);
 }
