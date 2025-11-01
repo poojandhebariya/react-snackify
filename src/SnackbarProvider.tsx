@@ -141,10 +141,10 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
   useEffect(() => {
     if (typeof document === "undefined") return;
 
-    let el = document.getElementById("snackify-portal");
+    let el = document.getElementById("snackbar-portal-root");
     if (!el) {
       el = document.createElement("div");
-      el.id = "snackify-portal";
+      el.id = "snackbar-portal-root";
       document.body.appendChild(el);
     }
     setPortalEl(el);
