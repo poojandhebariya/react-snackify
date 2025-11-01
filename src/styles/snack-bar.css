@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+@tailwind utilities;
 
 @keyframes slideInTop {
   from {
