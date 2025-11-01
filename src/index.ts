@@ -1,5 +1,6 @@
 export { SnackbarProvider } from "./SnackbarProvider";
 export { useSnackbar } from "./snackbarContext";
+export { Snackbar } from "./snack-bar";
 
 export { snackbarPositionClasses } from "./config/snack-bar-position";
 export { snackBarColors } from "./config/snack-bar-color";

@@ -119,81 +119,76 @@ export const Snackbar: React.FC<SnackbarProps> = ({
     : {};
 
   const positionStyle: React.CSSProperties = {
+    position: "fixed",
+    zIndex: 9999,
     left,
     right,
     transform: transformStyle,
     ...verticalOffsetStyle,
   };
 
-  const actionsArray = Array.isArray(action) ? action : action ? [action] : [];
+  const actions = Array.isArray(action) ? action : action ? [action] : [];
 
-  const getButtonStyles = () => {
-    if (styleVariant === "bold-monochrome") {
+  const getActionClass = () => {
+    if (styleVariant === "bold-monochrome")
       return "bg-black text-white border border-white focus:ring-white";
-    } else if (styleVariant === "vintage-paper") {
+    if (styleVariant === "vintage-paper")
       return "bg-gray-200 text-black border border-gray-400 focus:ring-gray-400";
-    } else if (styleVariant === "glassmorphism") {
-      switch (variant) {
-        case "success":
-          return "bg-white/20 text-green-400 border border-green-400/60 focus:ring-green-400";
-        case "error":
-          return "bg-white/20 text-red-400 border border-red-400/60 focus:ring-red-400";
-        case "info":
-          return "bg-white/20 text-blue-400 border border-blue-400/60 focus:ring-blue-400";
-        case "warning":
-          return "bg-white/20 text-yellow-400 border border-yellow-400/60 focus:ring-yellow-400";
-        default:
-          return "bg-white/20 text-white border border-white/60 focus:ring-white";
-      }
-    } else {
-      return "bg-white opacity-80 text-black focus:ring-gray-500";
+    if (styleVariant === "glassmorphism") {
+      const map: Record<string, string> = {
+        success:
+          "bg-white/20 text-green-400 border border-green-400/60 focus:ring-green-400",
+        error:
+          "bg-white/20 text-red-400   border border-red-400/60   focus:ring-red-400",
+        info: "bg-white/20 text-blue-400  border border-blue-400/60  focus:ring-blue-400",
+        warning:
+          "bg-white/20 text-yellow-400 border border-yellow-400/60 focus:ring-yellow-400",
+      };
+      return (
+        map[variant] ||
+        "bg-white/20 text-white border border-white/60 focus:ring-white"
+      );
     }
+    return "bg-white/80 text-black focus:ring-gray-500";
   };
 
   return (
-    <div className="fixed z-50" style={positionStyle}>
+    <div style={positionStyle}>
       <div
         className={clsx(
           animationClass,
-          "px-4 py-3 rounded-sm shadow-lg flex items-center justify-between min-w-96",
+          "snackbar",
           `snackbar--${styleVariant}`,
-          styleVariant === "glassmorphism" ? variant : snackBarColors[variant],
+          styleVariant === "glassmorphism" ? "" : snackBarColors[variant],
           classname
         )}
         onMouseEnter={pauseTimer}
         onMouseLeave={resumeTimer}
+        role="alert"
         aria-live="polite"
-        aria-label={`Notification: ${message}, disappears in ${
-          duration / 1000
-        } seconds`}
       >
-        <span className="pr-4">
-          {icon && <span className="flex-shrink-0">{icon}</span>}
-        </span>
+        {icon && <span className="snackbar__icon">{icon}</span>}
+        <span className="snackbar__message">{message}</span>
 
-        <span className="flex-1 pr-4">{message}</span>
-        {actionsArray.map((a, idx) => (
+        {actions.map((a, i) => (
           <button
-            key={idx}
+            key={i}
             onClick={() => {
               a.onClick?.();
-              if (a.autoDismiss !== false) {
-                handleClose();
-              }
+              if (a.autoDismiss !== false) handleClose();
             }}
-            type="button"
-            className={`ml-2 px-3 py-1 text-sm font-medium rounded-sm transition duration-150 ease-in-out hover:opacity-90 focus:outline-none focus:ring-1 active:scale-95 flex items-center ${getButtonStyles()}`}
+            className={clsx("snackbar__action", getActionClass())}
             aria-label={a.ariaLabel || a.label}
           >
             {a.icon && <span className="mr-1">{a.icon}</span>}
             {a.label}
           </button>
         ))}
+
         <button
           onClick={handleClose}
-          type="button"
-          className="ml-2 p-1 text-white opacity-80 hover:opacity-100 focus:outline-none focus:ring-1 focus:ring-white"
-          aria-label="Close snackbar"
+          className="snackbar__close"
+          aria-label="Close"
         >
           <svg
             width="16"
@@ -203,12 +198,13 @@ export const Snackbar: React.FC<SnackbarProps> = ({
           >
             <path
               d="M2 2L14 14M2 14L14 2"
-              stroke={styleVariant === "vintage-paper" ? "black" : "white"}
+              stroke={styleVariant === "vintage-paper" ? "#000" : "#fff"}
               strokeWidth="2"
               strokeLinecap="round"
             />
           </svg>
         </button>
+
         <div
           className={`snackbar__progress-bar snackbar__progress-bar--${styleVariant}`}
           style={{

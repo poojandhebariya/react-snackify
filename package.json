@@ -27,7 +27,7 @@
   ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts && npm run build:css",
-    "build:css": "npx tailwindcss -c tailwind.config.cjs -i ./src/styles/snack-bar.css -o ./dist/styles/snack-bar.css --minify",
+    "build:css": "cpx ./src/styles/snack-bar.css ./dist/styles/snack-bar.css",
     "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
     "prepare": "npm run build"
   },
