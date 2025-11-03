@@ -93,6 +93,7 @@ function MyComponent() {
 | `animationType`  | `'fade' \| 'slide' \| 'scale' \| 'grow'`                                                                  | `'slide'`   | Animation style for entering/exiting.                  |
 | `styleVariant`   | `'default' \| 'neon-glow' \| 'holographic' \| 'bold-monochrome' \| 'vintage-paper' \| 'glassmorphism'`    | `'default'` | Visual theme for snackbars.                            |
 | `iconSet`        | `{ success?: ReactNode; error?: ReactNode; warning?: ReactNode; info?: ReactNode; default?: ReactNode; }` | -           | Custom icons for each variant (falls back to default). |
+| `maxSnack`       | `number`                                                                                                  | `5`         | Maximum number of snackbars displayed simultaneously.
 
 ### showSnackbar Options
 
