@@ -1,12 +1,14 @@
-```markdown
+
 # react-snackify
 
 React Snackify made easy! 🚀 Display customizable snackbar notifications in your React applications with minimal setup.
 
+## Demo
+**See it in action!** Try our interactive playground to customize and preview snackbars in real-time: [Explore the Demo](https://melodic-rolypoly-7e97b2.netlify.app/)
+
 ## Installation
 
 Install the package via npm or yarn:
-```
 
 ```bash
 npm install react-snackify
