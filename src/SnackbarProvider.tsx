@@ -40,6 +40,7 @@ interface SnackbarProviderProps {
     info?: React.ReactNode;
     default?: React.ReactNode;
   };
+  maxSnack?: number;
 }
 
 export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
@@ -48,6 +49,7 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
   styleVariant = "default",
   globalPosition,
   iconSet,
+  maxSnack = 5,
 }) => {
   const [snackbars, setSnackbars] = useState<SnackbarItem[]>([]);
   const [portalEl, setPortalEl] = useState<HTMLElement | null>(null);
@@ -70,14 +72,10 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
         autoMorph,
       } = options;
 
-      // Optional: Prevent duplicate by ID
       setSnackbars((prev) => {
-        // Replace if same ID and new has higher or equal priority
         const existingIndex = prev.findIndex((snack) => snack.id === id);
         if (existingIndex !== -1) {
-          if ((prev[existingIndex].priority ?? 0) > priority) {
-            return prev; // skip lower-priority update
-          }
+          if ((prev[existingIndex].priority ?? 0) > priority) return prev;
           const updated = [...prev];
           updated[existingIndex] = {
             id,
@@ -93,7 +91,7 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
           return updated;
         }
 
-        return [
+        const next = [
           ...prev,
           {
             id,
@@ -107,6 +105,12 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
             autoMorph,
           },
         ];
+
+        if (next.length > maxSnack) {
+          next.splice(0, next.length - maxSnack);
+        }
+
+        return next;
       });
 
       if (autoMorph?.to) {
@@ -135,7 +139,7 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
         close: () => hideSnackbar(id),
       };
     },
-    [hideSnackbar]
+    [hideSnackbar, globalPosition, maxSnack]
   );
 
   useEffect(() => {
