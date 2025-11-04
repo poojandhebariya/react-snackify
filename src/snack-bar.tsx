@@ -155,7 +155,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({
       <div
         className={clsx(
           animationClass,
-          "px-4 py-3 rounded-sm shadow-lg flex items-center justify-between min-w-96",
+          "px-4 py-3 rounded-sm shadow-lg flex items-center justify-between w-[90vw] sm:min-w-96 sm:max-w-[500px]",
           `snackbar--${styleVariant}`,
           styleVariant === "glassmorphism" ? variant : snackBarColors[variant],
           classname
