@@ -1,6 +1,6 @@
 {
   "name": "react-snackify",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "A lightweight, customizable React Snackbar component with Tailwind CSS support.",
   "license": "MIT",
   "author": "Poojan Dhebariya <https://github.com/poojandhebariya>",
