@@ -94,7 +94,7 @@ function MyComponent() {
 | `globalPosition` | `'top-left' \| 'top-right' \| 'top-center' \| 'bottom-left' \| 'bottom-right' \| 'bottom-center'`         | -           | Default position for all snackbars.                    |
 | `animationType`  | `'fade' \| 'slide' \| 'scale' \| 'grow'`                                                                  | `'slide'`   | Animation style for entering/exiting.                  |
 | `styleVariant`   | `'default' \| 'neon-glow' \| 'holographic' \| 'bold-monochrome' \| 'vintage-paper' \| 'glassmorphism'`    | `'default'` | Visual theme for snackbars.                            |
-| `iconSet`        | `{ success?: ReactNode; error?: ReactNode; warning?: ReactNode; info?: ReactNode; default?: ReactNode; }` | -           | Custom icons for each variant (falls back to default). |
+| `iconSet`        | `{ success?: ReactNode; error?: ReactNode; warning?: ReactNode; info?: ReactNode; loading?: ReactNode; default?: ReactNode; }` | -           | Custom icons for each variant (falls back to default). |
 | `maxSnack`       | `number`                                                                                                  | `5`         | Maximum number of snackbars displayed simultaneously.
 
 ### showSnackbar Options
@@ -106,7 +106,7 @@ The `showSnackbar` function returns a controller with `update` and `close` metho
 | `id`        | `string`                                                                                          | Auto-generated              | Unique identifier for updating/closing.          |
 | `classname` | `string`                                                                                          | `''`                        | Additional CSS classes for the snackbar.         |
 | `message`   | `string \| React.ReactNode`                                                                       | -                           | The content to display.                          |
-| `variant`   | `'success' \| 'error' \| 'warning' \| 'info'`                                                     | `'info'`                    | Notification type (affects color/icon).          |
+| `variant`   | `'success' \| 'error' \| 'warning' \| 'info' \| 'loading'`                                        | `'info'`                    | Notification type (affects color/icon).          |
 | `position`  | `'top-left' \| 'top-right' \| 'top-center' \| 'bottom-left' \| 'bottom-right' \| 'bottom-center'` | Provider's `globalPosition` | Placement on screen.                             |
 | `duration`  | `number`                                                                                          | `3000`                      | Time in ms before auto-dismiss (0 for infinite). |
 | `action`    | `SnackbarAction \| SnackbarAction[]`                                                              | -                           | Button(s) with label, onClick, icon, etc.        |
