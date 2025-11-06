@@ -38,6 +38,7 @@ interface SnackbarProviderProps {
     error?: React.ReactNode;
     warning?: React.ReactNode;
     info?: React.ReactNode;
+    loading?: React.ReactNode;
     default?: React.ReactNode;
   };
   maxSnack?: number;

@@ -9,7 +9,7 @@ export interface SnackbarProps {
   id: string;
   classname: string;
   message: string | React.ReactNode;
-  variant: "success" | "error" | "info" | "warning";
+  variant: "success" | "error" | "info" | "warning" | "loading";
   position: SnackbarPosition;
   action?: SnackbarAction | SnackbarAction[];
   onClose?: () => void;
@@ -37,14 +37,16 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   animationType = "slide",
   styleVariant = "default",
   icon,
-  duration = 3000,
+  duration: propDuration = 3000,
 }) => {
   const [exiting, setExiting] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const startTimeRef = useRef<number>(Date.now());
-  const remainingTimeRef = useRef<number>(duration);
+  const remainingTimeRef = useRef<number>(propDuration);
+
+  const duration = variant === "loading" ? propDuration ?? 0 : propDuration;
 
   const [isPaused, setIsPaused] = useState(false);
 
@@ -56,6 +58,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   };
 
   const startTimer = (time: number) => {
+    if (variant === "loading" || time <= 0) return;
     timerRef.current = setTimeout(() => {
       handleClose();
     }, time);
@@ -63,6 +66,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   };
 
   const pauseTimer = () => {
+    if (variant === "loading") return;
     if (timerRef.current) {
       clearTimeout(timerRef.current);
       timerRef.current = null;
@@ -73,6 +77,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   };
 
   const resumeTimer = () => {
+    if (variant === "loading") return;
     if (!timerRef.current && remainingTimeRef.current > 0) {
       setIsPaused(false);
       startTimer(remainingTimeRef.current);
@@ -142,6 +147,8 @@ export const Snackbar: React.FC<SnackbarProps> = ({
           return "bg-white/20 text-blue-400 border border-blue-400/60 focus:ring-blue-400";
         case "warning":
           return "bg-white/20 text-yellow-400 border border-yellow-400/60 focus:ring-yellow-400";
+        case "loading":
+          return "bg-white/20 text-white border border-white/60 focus:ring-white";
         default:
           return "bg-white/20 text-white border border-white/60 focus:ring-white";
       }
@@ -149,6 +156,29 @@ export const Snackbar: React.FC<SnackbarProps> = ({
       return "bg-white opacity-80 text-black focus:ring-gray-500";
     }
   };
+
+  const LoadingSpinner = () => (
+    <svg
+      className="animate-spin mr-2 h-5 w-5 text-white"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      ></circle>
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+      ></path>
+    </svg>
+  );
 
   return (
     <div className="fixed z-50" style={positionStyle}>
@@ -163,59 +193,85 @@ export const Snackbar: React.FC<SnackbarProps> = ({
         onMouseEnter={pauseTimer}
         onMouseLeave={resumeTimer}
         aria-live="polite"
-        aria-label={`Notification: ${message}, disappears in ${
-          duration / 1000
-        } seconds`}
       >
-        <span className="pr-4">
-          {icon && <span className="flex-shrink-0">{icon}</span>}
-        </span>
+        {variant === "loading" ? (
+          <>
+            <span className="flex items-center flex-1">
+              <LoadingSpinner />
+              <span>{message || "Loading..."}</span>
+            </span>
+            {actionsArray.length > 0 &&
+              actionsArray.map((a, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    a.onClick?.();
+                    if (a.autoDismiss !== false) {
+                      handleClose();
+                    }
+                  }}
+                  type="button"
+                  className={`ml-2 px-3 py-1 text-sm font-medium rounded-sm transition duration-150 ease-in-out hover:opacity-90 focus:outline-none focus:ring-1 active:scale-95 flex items-center ${getButtonStyles()}`}
+                  aria-label={a.ariaLabel || a.label}
+                >
+                  {a.icon && <span className="mr-1">{a.icon}</span>}
+                  {a.label}
+                </button>
+              ))}
+          </>
+        ) : (
+          <>
+            <span className="pr-4">
+              {icon && <span className="flex-shrink-0">{icon}</span>}
+            </span>
 
-        <span className="flex-1 pr-4">{message}</span>
-        {actionsArray.map((a, idx) => (
-          <button
-            key={idx}
-            onClick={() => {
-              a.onClick?.();
-              if (a.autoDismiss !== false) {
-                handleClose();
-              }
-            }}
-            type="button"
-            className={`ml-2 px-3 py-1 text-sm font-medium rounded-sm transition duration-150 ease-in-out hover:opacity-90 focus:outline-none focus:ring-1 active:scale-95 flex items-center ${getButtonStyles()}`}
-            aria-label={a.ariaLabel || a.label}
-          >
-            {a.icon && <span className="mr-1">{a.icon}</span>}
-            {a.label}
-          </button>
-        ))}
-        <button
-          onClick={handleClose}
-          type="button"
-          className="ml-2 p-1 text-white opacity-80 hover:opacity-100 focus:outline-none focus:ring-1 focus:ring-white"
-          aria-label="Close snackbar"
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M2 2L14 14M2 14L14 2"
-              stroke={styleVariant === "vintage-paper" ? "black" : "white"}
-              strokeWidth="2"
-              strokeLinecap="round"
+            <span className="flex-1 pr-4">{message}</span>
+            {actionsArray.map((a, idx) => (
+              <button
+                key={idx}
+                onClick={() => {
+                  a.onClick?.();
+                  if (a.autoDismiss !== false) {
+                    handleClose();
+                  }
+                }}
+                type="button"
+                className={`ml-2 px-3 py-1 text-sm font-medium rounded-sm transition duration-150 ease-in-out hover:opacity-90 focus:outline-none focus:ring-1 active:scale-95 flex items-center ${getButtonStyles()}`}
+                aria-label={a.ariaLabel || a.label}
+              >
+                {a.icon && <span className="mr-1">{a.icon}</span>}
+                {a.label}
+              </button>
+            ))}
+            <button
+              onClick={handleClose}
+              type="button"
+              className="ml-2 p-1 text-white opacity-80 hover:opacity-100 focus:outline-none focus:ring-1 focus:ring-white"
+              aria-label="Close snackbar"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M2 2L14 14M2 14L14 2"
+                  stroke={styleVariant === "vintage-paper" ? "black" : "white"}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+            <div
+              className={`snackbar__progress-bar snackbar__progress-bar--${styleVariant}`}
+              style={{
+                animationDuration: `${duration}ms`,
+                animationPlayState: isPaused ? "paused" : "running",
+              }}
             />
-          </svg>
-        </button>
-        <div
-          className={`snackbar__progress-bar snackbar__progress-bar--${styleVariant}`}
-          style={{
-            animationDuration: `${duration}ms`,
-            animationPlayState: isPaused ? "paused" : "running",
-          }}
-        />
+          </>
+        )}
       </div>
     </div>
   );

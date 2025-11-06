@@ -1,1 +1,6 @@
-export type SnackbarVariant = "success" | "error" | "warning" | "info";
+export type SnackbarVariant =
+  | "success"
+  | "error"
+  | "warning"
+  | "info"
+  | "loading";
